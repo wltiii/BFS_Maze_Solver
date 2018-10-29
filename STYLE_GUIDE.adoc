@@ -1,5 +1,4 @@
 = Style Guide
-Bill Turner
 
 == Style Notes
 I continually evolve my style based upon things I have read, personal experience and discssion

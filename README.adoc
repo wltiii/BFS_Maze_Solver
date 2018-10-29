@@ -74,16 +74,9 @@ no knowledge. *_I hadn't used SpringBoot before developing this solution._*
 story.
 
 == Architecture Overview
-*TO BE DEFINED*
-
 All applications can be solved in a myriad of ways. Herein, when I speak of the application, I am referring to
-the backend solution as a whole. The front end piece is contained in *_another repo_* replete with its own
+the backend solution as a whole. The front end piece is contained in https://github.com/wltiii/maze-solver-ui replete with its own
 README.
-
-Activity is an orchestrator. It manages calls to the other services and returns suggestions.
-Forecast calls other weather forecasting services (at present only one) and merges those
-results into a common response. Suggestion wraps a rules engine which takes weather conditions
-and returns a suggested activity.
 
 === Assumptions
 . The maze is rectangular in shape.
@@ -98,11 +91,16 @@ Violations of the above return a rejected request response.
 |===
 |Method |URI |Purpose |Responses |Notes
 
-|GET
+|PUT
 |/solve
 |Returns the possible activities that can be suggested.
 | 200 ok
-|Not yet implemented.
+| Successful request
+|
+|
+|
+| 500
+| Invalid request
 |===
 
 === Technology Stack

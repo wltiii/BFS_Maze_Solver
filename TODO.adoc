@@ -1,0 +1,5 @@
+= TODOs
+
+. Solve MazeControllerTest jsonPath issue
+. Convert MazeControllerTest to Spock
+. Solve Slf4j logging problem

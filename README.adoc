@@ -1,0 +1,143 @@
+= Interview Exercise - A Breadth First Maze Solver
+Bill Turner
+:toc:
+:toc-placement!:
+
+toc::[]
+
+== Summary
+A web service that finds the shortest path from entry to exit using breadth first search.
+
+== Requirements
+. Expose an endpoint to solve a text-based maze (described below)
+. Solve the maze by finding the shortest route from the start to the finish
+. Not use a third party pathfinding library to solve the maze
+. Include all necessary build tasks to run the solution
+. Solve the provided `maze1.txt` (pictured below), `maze2.txt`, and `maze3.txt`
+correctly
+. Solve each maze in under a minute on reasonable hardware
+
+=== Maze definition and samples
+A valid maze may contain the following types of characters:
+
+* `.` represents an open road
+* `#` represents a blocked road
+* `A` represents the starting point
+* `B` represents the destination point
+
+Example input maze:
+```
+##########
+#A...#...#
+#.#.##.#.#
+#.#.##.#.#
+#.#....#B#
+#.#.##.#.#
+#....#...#
+##########
+```
+
+Example simplified visual of the solution, using `@` to represent the correct path.
+The shortest number of steps in this case is 14. An ASCII representation like this
+is not recommended however for the final solution.
+```
+##########
+#A@@.#...#
+#.#@##.#.#
+#.#@##.#.#
+#.#@@@@#B#
+#.#.##@#@#
+#....#@@@#
+##########
+```
+
+
+=== Allowed movements
+Anything outside the bounds of the array should be considered a wall. In addition,
+you may only move in horizontal or vertical directions. Diagonal movements are
+not allowed.
+
+== Goals
+
+I believe that what was wanted was something that not only worked, but also demonstrated:
+
+. Design skills
+. Knowledge of the tools used
+. Knowledge of unit testing
+. Coding practice
+
+In addition, by developing this, I was able to demonstrate other things.
+
+. The ability to come up to speed quickly with technologies of which I have little or
+no knowledge. *_I hadn't used SpringBoot before developing this solution._*
+. The ability to deliver a working solution in the time span typically available for a
+story.
+
+== Architecture Overview
+*TO BE DEFINED*
+
+All applications can be solved in a myriad of ways. Herein, when I speak of the application, I am referring to
+the backend solution as a whole. The front end piece is contained in *_another repo_* replete with its own
+README.
+
+Activity is an orchestrator. It manages calls to the other services and returns suggestions.
+Forecast calls other weather forecasting services (at present only one) and merges those
+results into a common response. Suggestion wraps a rules engine which takes weather conditions
+and returns a suggested activity.
+
+=== Assumptions
+. The maze is rectangular in shape.
+. The maze is comprised of only the valid definition characters (see above)
+. The maze has only one start and one endpoint
+
+Violations of the above return a rejected request response.
+
+=== Endpoint Design
+
+.Maze Method/URI Definitions
+|===
+|Method |URI |Purpose |Responses |Notes
+
+|GET
+|/solve
+|Returns the possible activities that can be suggested.
+| 200 ok
+|Not yet implemented.
+|===
+
+=== Technology Stack
+This was developed using the following technologies.
+
+* Groovy 2.5.3
+* JVM: openjdk version 1.8.0_144
+* OS: Ubuntu 18.04
+* Spock 1.2-groovy-2.5
+* Gradle 4.10.2
+* Spring Boot 2.0.6.RELEASE
+
+== Getting Started ==
+Install the following tools if you do not already have them:
+
+ . Install the tools above as necessary. I use SDKMAN - https://sdkman.io/ - to do this.
+ . Install git (see https://git-scm.com/).
+ . Clone the project.
+ . Navigate into the project directory, for example [projects home]/activity.
+ . Run command `./gradlew build && java -jar build/libs/gs-rest-service-cors-0.1.0.jar`.
+
+Your server should now be running.
+
+== Disclaimer ==
+Not having access to a user nor analyst is not a natural condition. Requirements may not
+ have been understood as intended. I believe I understood them properly and have implemented
+ based upon that assumption.
+
+Also, other design choices may have been made having someone available. And, naturally,
+everyone makes different choices. I would be happy to discuss!
+
+This cannot be considered production ready. I viewed this as a story that would have
+further stories addressing issues such as authorization, as well as implementing the
+other endpoints.
+
+include::STYLE_GUIDE.adoc[]
+
+include::TODO.adoc[]

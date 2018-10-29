@@ -1,0 +1,69 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.6.RELEASE")
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.0.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.5.RELEASE'
+}
+
+ext['groovy.version'] = '2.5.0'
+
+group 'com.changent.bfsmaze'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+bootJar {
+    baseName = 'gs-rest-service-cors'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integration-test/java')
+        }
+        resources.srcDir file('src/integration-test/resources')
+    }
+}
+
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.5.3'
+    compile group:'ch.qos.logback', name:'logback-classic'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.0.6.RELEASE'
+    testCompile("junit:junit")
+    testCompile group: 'org.spockframework', name: 'spock-core', version: '1.2-groovy-2.5'
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+task integrationTest(type: Test) {
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
+
+check.dependsOn integrationTest
+integrationTest.mustRunAfter test
